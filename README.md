@@ -8,7 +8,8 @@ Contains my solutions to <a href="https://leetcode.com/problemset/">LeetCode Pro
 
 - <a href="https://leetcode.com/">LeetCode</a>
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
-- <a href="https://biomejs.dev/">Biome </a>
+- <a href="https://jestjs.io/">Jest</a>
+- <a href="https://biomejs.dev/">Biome</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
 - <a href="https://yarnpkg.com/">Yarn</a>
 
