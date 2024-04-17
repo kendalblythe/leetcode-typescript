@@ -3,10 +3,10 @@ test("1. Two Sum", () => {
   expect(twoSum([3, 2, 4], 6)).toEqual([1, 2]);
   expect(twoSum([3, 3], 6)).toEqual([0, 1]);
   expect(twoSum([4, -3, 11, 9, 2, 15, 0], 12)).toEqual([1, 5]);
-  expect(twoSum([1, 2, 3, 4, 5], 20)).toEqual([]);
+  expect(twoSum([1, 2, 3, 4, 5], 20)).toBeNull();
 });
 
-function twoSum(nums: number[], target: number): number[] {
+const twoSum = (nums: number[], target: number): number[] | null => {
   for (let i = 0; i < nums.length - 1; i++) {
     for (let j = i + 1; j < nums.length; j++) {
       if (nums[i] + nums[j] === target) {
@@ -14,5 +14,5 @@ function twoSum(nums: number[], target: number): number[] {
       }
     }
   }
-  return [];
-}
+  return null;
+};

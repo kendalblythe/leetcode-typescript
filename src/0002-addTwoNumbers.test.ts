@@ -6,18 +6,18 @@ test("2. Add Two Numbers", () => {
   ]);
 });
 
-function addTwoNumbers(list1: number[], list2: number[]): number[] {
+const addTwoNumbers = (list1: number[], list2: number[]): number[] => {
   const num1 = listToNumber(list1);
   const num2 = listToNumber(list2);
   return numberToList(num1 + num2);
-}
+};
 
-function listToNumber(list: number[]): number {
+const listToNumber = (list: number[]): number => {
   return list.reduce((prev, curr, index) => {
     return prev + curr * 10 ** index;
   }, 0);
-}
+};
 
-function numberToList(num: number): number[] {
+const numberToList = (num: number): number[] => {
   return [...num.toString()].toReversed().map((s) => Number.parseInt(s));
-}
+};
