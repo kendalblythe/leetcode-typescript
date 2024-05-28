@@ -5,27 +5,29 @@ test("4. Median of Two Sorted Arrays", () => {
   expect(findMedianSortedArrays([1, 3, 5], [2, 3])).toEqual(3);
 });
 
-const findMedianSortedArrays = (nums1: number[], nums2: number[]): number => {
-  const mergedArrayLen = nums1.length + nums2.length;
+const findMedianSortedArrays = (array1: number[], array2: number[]): number => {
+  const mergedArrayLen = array1.length + array2.length;
   const medianIndex = Math.floor(mergedArrayLen / 2);
-  const multipleMedianIndices = mergedArrayLen % 2 === 0;
+  const mergedSortedArray = mergeSortedArrays(array1, array2, medianIndex);
+  return mergedArrayLen % 2 === 0
+    ? (mergedSortedArray[medianIndex - 1] + mergedSortedArray[medianIndex]) / 2
+    : mergedSortedArray[medianIndex];
+};
 
-  // Get sorted merged array up to median index
-  const sortedMergedArray: number[] = [];
-  for (let i = 0; i <= medianIndex; i++) {
-    const num1 = nums1[0];
-    const num2 = nums2[0];
-    if (num1 < num2) {
-      sortedMergedArray.push(num1);
-      nums1.shift();
+const mergeSortedArrays = (
+  array1: number[],
+  array2: number[],
+  maxIndex = array1.length + array2.length,
+): number[] => {
+  const mergedArray: number[] = [];
+  let i1 = 0;
+  let i2 = 0;
+  while (mergedArray.length <= maxIndex) {
+    if (array1[i1] < array2[i2]) {
+      mergedArray.push(array1[i1++]);
     } else {
-      sortedMergedArray.push(num2);
-      nums2.shift();
+      mergedArray.push(array2[i2++]);
     }
   }
-
-  // Return median value
-  return multipleMedianIndices
-    ? (sortedMergedArray[medianIndex - 1] + sortedMergedArray[medianIndex]) / 2
-    : sortedMergedArray[medianIndex];
+  return mergedArray;
 };
