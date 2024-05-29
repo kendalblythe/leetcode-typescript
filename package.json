@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watch",
+    "test:all": "jest --watchAll=false",
     "lint": "biome lint .",
     "format": "biome format --write ."
   },
