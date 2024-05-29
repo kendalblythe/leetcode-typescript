@@ -43,5 +43,15 @@ const getLeadingDigits = (s: string): number => {
       break;
     }
   }
-  return digitsStr ? Number.parseInt(digitsStr) : 0;
+  return digitsStr ? parseInteger(digitsStr) : 0;
+};
+
+const parseInteger = (numStr: string): number => {
+  let n = 0;
+  for (let i = 0; i < numStr.length; i++) {
+    const digit = numStr.charCodeAt(i) - "0".charCodeAt(0);
+    const exp = numStr.length - i - 1;
+    n += digit * 10 ** exp;
+  }
+  return n;
 };
