@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
+    "moduleDetection": "force",
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
