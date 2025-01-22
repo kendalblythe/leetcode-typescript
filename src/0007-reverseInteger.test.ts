@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("7. Reverse Integer", () => {
   expect(reverseInteger(123)).toEqual(321);
   expect(reverseInteger(-123)).toEqual(-321);

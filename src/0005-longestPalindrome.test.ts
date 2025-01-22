@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("5. Longest Palindromic Substring", () => {
   expect(longestPalindrome("babad")).toEqual("bab");
   expect(longestPalindrome("cbbd")).toEqual("bb");

@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("6. Zigzag Convert", () => {
   expect(zigzagConvert("PAYPALISHIRING", 3)).toEqual("PAHNAPLSIIGYIR");
   expect(zigzagConvert("PAYPALISHIRING", 4)).toEqual("PINALSIGYAHRPI");

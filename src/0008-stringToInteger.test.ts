@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("8. String to integer atoi", () => {
   expect(stringToInteger("42")).toEqual(42);
   expect(stringToInteger(" -042")).toEqual(-42);

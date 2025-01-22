@@ -8,20 +8,20 @@ Contains my solutions to <a href="https://leetcode.com/problemset/">LeetCode Pro
 
 - <a href="https://leetcode.com/">LeetCode</a>
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
-- <a href="https://jestjs.io/">Jest</a>
+- <a href="https://vitest.dev/">Vitest</a>
 - <a href="https://biomejs.dev/">Biome</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
-- <a href="https://yarnpkg.com/">Yarn</a>
+- <a href="https://pnpm.io/">pnpm</a>
 
 ## Getting Started
 
 After you clone the Git repository, you can run the following
 <a href="https://yarnpkg.com/">Yarn</a> commands.
 
-- `yarn` - install packages
-- `yarn test` - run tests
-- `yarn lint` - lint check
-- `yarn format` - format code
+- `pnpm install` - install packages
+- `pnpm test` - run tests
+- `pnpm lint` - lint check
+- `pnpm format` - format code
 
 ## Developer
 

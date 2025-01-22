@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("3. Longest Substring Without Repeating Characters", () => {
   expect(lengthOfLongestSubstring("abcabcbb")).toEqual(3);
   expect(lengthOfLongestSubstring("bbbbb")).toEqual(1);

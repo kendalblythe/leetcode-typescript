@@ -1,3 +1,5 @@
+import { expect, test } from "vitest";
+
 test("2. Add Two Numbers", () => {
   expect(addTwoNumbers([2, 4, 3], [5, 6, 4])).toEqual([7, 0, 8]);
   expect(addTwoNumbers([0], [0])).toEqual([0]);
