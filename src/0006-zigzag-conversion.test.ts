@@ -1,9 +1,10 @@
-import { expect, test } from "vitest";
+// https://leetcode.com/problems/zigzag-conversion/description/
+import { expect, test } from 'vitest';
 
-test("6. Zigzag Convert", () => {
-  expect(zigzagConvert("PAYPALISHIRING", 3)).toEqual("PAHNAPLSIIGYIR");
-  expect(zigzagConvert("PAYPALISHIRING", 4)).toEqual("PINALSIGYAHRPI");
-  expect(zigzagConvert("A", 1)).toEqual("A");
+test('6. Zigzag Conversion', () => {
+  expect(zigzagConvert('PAYPALISHIRING', 3)).toEqual('PAHNAPLSIIGYIR');
+  expect(zigzagConvert('PAYPALISHIRING', 4)).toEqual('PINALSIGYAHRPI');
+  expect(zigzagConvert('A', 1)).toEqual('A');
 });
 
 const zigzagConvert = (s: string, numRows: number): string => {
@@ -27,14 +28,13 @@ const zigzagConvert = (s: string, numRows: number): string => {
         colIndex++;
       }
     } else {
-      grid[getGridCoordinateKey(rowIndex + numRows - colOffset - 1, colIndex)] =
-        c;
+      grid[getGridCoordinateKey(rowIndex + numRows - colOffset - 1, colIndex)] = c;
       colIndex++;
     }
   }
 
   // Build new string from grid characters (rightward/down)
-  let str = "";
+  let str = '';
   for (let r = 0; r < numRows; r++) {
     for (let c = 0; c <= colIndex; c++) {
       const key = getGridCoordinateKey(r, c);

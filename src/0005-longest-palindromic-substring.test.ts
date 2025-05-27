@@ -1,8 +1,9 @@
-import { expect, test } from "vitest";
+// https://leetcode.com/problems/longest-palindromic-substring/description/
+import { expect, test } from 'vitest';
 
-test("5. Longest Palindromic Substring", () => {
-  expect(longestPalindrome("babad")).toEqual("bab");
-  expect(longestPalindrome("cbbd")).toEqual("bb");
+test('5. Longest Palindromic Substring', () => {
+  expect(longestPalindrome('babad')).toEqual('bab');
+  expect(longestPalindrome('cbbd')).toEqual('bb');
 });
 
 const longestPalindrome = (s: string): string => {
@@ -11,9 +12,9 @@ const longestPalindrome = (s: string): string => {
   for (let substrLen = maxSubstrLen; substrLen >= minSubstrLen; substrLen--) {
     for (let startIndex = 0; startIndex <= s.length - substrLen; startIndex++) {
       const substr = s.substring(startIndex, startIndex + substrLen);
-      const reverseSubstr = [...substr].reverse().join("");
+      const reverseSubstr = [...substr].reverse().join('');
       if (substr === reverseSubstr) return substr;
     }
   }
-  return "";
+  return '';
 };

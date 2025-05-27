@@ -2,21 +2,23 @@
 
 ## Introduction
 
-Contains my solutions to <a href="https://leetcode.com/problemset/">LeetCode Problems</a> using TypeScript.
+Contains my solutions to <a href="https://leetcode.com/problemset/">LeetCode Problems</a> using
+TypeScript.
 
 ## Technologies
 
 - <a href="https://leetcode.com/">LeetCode</a>
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
 - <a href="https://vitest.dev/">Vitest</a>
-- <a href="https://biomejs.dev/">Biome</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
+- <a href="https://eslint.org/">ESLint</a>
+- <a href="https://prettier.io/">Prettier</a>
 - <a href="https://pnpm.io/">pnpm</a>
 
 ## Getting Started
 
-After you clone the Git repository, you can run the following
-<a href="https://yarnpkg.com/">Yarn</a> commands.
+After you clone the Git repository, you can run the following <a href="https://pnpm.io/">pnpm</a>
+commands.
 
 - `pnpm install` - install packages
 - `pnpm test` - run tests

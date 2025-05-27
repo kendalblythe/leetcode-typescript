@@ -1,10 +1,11 @@
-import { expect, test } from "vitest";
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+import { expect, test } from 'vitest';
 
-test("3. Longest Substring Without Repeating Characters", () => {
-  expect(lengthOfLongestSubstring("abcabcbb")).toEqual(3);
-  expect(lengthOfLongestSubstring("bbbbb")).toEqual(1);
-  expect(lengthOfLongestSubstring("pwwkew")).toEqual(3);
-  expect(lengthOfLongestSubstring("developer")).toEqual(5);
+test('3. Longest Substring Without Repeating Characters', () => {
+  expect(lengthOfLongestSubstring('abcabcbb')).toEqual(3);
+  expect(lengthOfLongestSubstring('bbbbb')).toEqual(1);
+  expect(lengthOfLongestSubstring('pwwkew')).toEqual(3);
+  expect(lengthOfLongestSubstring('developer')).toEqual(5);
 });
 
 const lengthOfLongestSubstring = (str: string): number => {

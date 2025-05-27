@@ -1,11 +1,10 @@
-import { expect, test } from "vitest";
+// https://leetcode.com/problems/add-two-numbers/description/
+import { expect, test } from 'vitest';
 
-test("2. Add Two Numbers", () => {
+test('2. Add Two Numbers', () => {
   expect(addTwoNumbers([2, 4, 3], [5, 6, 4])).toEqual([7, 0, 8]);
   expect(addTwoNumbers([0], [0])).toEqual([0]);
-  expect(addTwoNumbers([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9])).toEqual([
-    8, 9, 9, 9, 0, 0, 0, 1,
-  ]);
+  expect(addTwoNumbers([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9])).toEqual([8, 9, 9, 9, 0, 0, 0, 1]);
 });
 
 const addTwoNumbers = (list1: number[], list2: number[]): number[] => {

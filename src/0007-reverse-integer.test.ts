@@ -1,6 +1,7 @@
-import { expect, test } from "vitest";
+// https://leetcode.com/problems/reverse-integer/description/
+import { expect, test } from 'vitest';
 
-test("7. Reverse Integer", () => {
+test('7. Reverse Integer', () => {
   expect(reverseInteger(123)).toEqual(321);
   expect(reverseInteger(-123)).toEqual(-321);
   expect(reverseInteger(120)).toEqual(21);
@@ -13,7 +14,7 @@ const MIN_VALUE = 2 ** 31 * -1;
 
 const reverseInteger = (n: number): number => {
   const s = n.toString();
-  const reverseS = [...s].reverse().join("");
+  const reverseS = [...s].reverse().join('');
   const reverseN = Number.parseFloat(reverseS);
   const num = n < 0 ? -reverseN : reverseN;
   return num < MIN_VALUE || num > MAX_VALUE ? 0 : num;
