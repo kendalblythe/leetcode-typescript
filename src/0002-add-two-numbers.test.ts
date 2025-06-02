@@ -11,19 +11,19 @@ class ListNode {
 }
 
 test('2. Add Two Numbers', () => {
-  let l1 = arrayToList([2, 4, 3]);
-  let l2 = arrayToList([5, 6, 4]);
-  let l3 = arrayToList([7, 0, 8]);
+  let l1 = numStringToList('243');
+  let l2 = numStringToList('564');
+  let l3 = numStringToList('708');
   expect(addTwoNumbers(l1, l2)).toEqual(l3);
 
-  l1 = arrayToList([0]);
-  l2 = arrayToList([0]);
-  l3 = arrayToList([0]);
+  l1 = numStringToList('0');
+  l2 = numStringToList('0');
+  l3 = numStringToList('0');
   expect(addTwoNumbers(l1, l2)).toEqual(l3);
 
-  l1 = arrayToList([9, 9, 9, 9, 9, 9, 9]);
-  l2 = arrayToList([9, 9, 9, 9]);
-  l3 = arrayToList([8, 9, 9, 9, 0, 0, 0, 1]);
+  l1 = numStringToList('9999999');
+  l2 = numStringToList('9999');
+  l3 = numStringToList('89990001');
   expect(addTwoNumbers(l1, l2)).toEqual(l3);
 
   expect(addTwoNumbers(l1, null)).toBeNull();
@@ -35,41 +35,38 @@ const addTwoNumbers = (l1: ListNode | null, l2: ListNode | null): ListNode | nul
   if (l1 === null || l2 === null) {
     return null;
   }
-  const n1 = arrayToNumber(listToArray(l1));
-  const n2 = arrayToNumber(listToArray(l2));
-  return arrayToList(numberToArray(n1 + n2));
+  const n1 = parseInt(reverseString(listToNumString(l1)));
+  const n2 = parseInt(reverseString(listToNumString(l2)));
+  return numStringToList(reverseString((n1 + n2).toString()));
 };
 
-const arrayToList = (array: number[]): ListNode | null => {
+const numStringToList = (numString: string): ListNode | null => {
+  if (isNaN(parseInt(numString))) {
+    return null;
+  }
   let prevNode: ListNode | null = null;
   let currNode: ListNode | undefined;
-  for (let i = array.length - 1; i >= 0; i--) {
-    currNode = new ListNode(array[i], prevNode);
+  for (let i = numString.length - 1; i >= 0; i--) {
+    const n = parseInt(numString.charAt(i));
+    currNode = new ListNode(n, prevNode);
     prevNode = currNode;
   }
   return currNode ?? null;
 };
 
-const listToArray = (list: ListNode | null): number[] => {
+const listToNumString = (list: ListNode | null): string => {
   if (list === null) {
-    return [];
+    return '';
   }
-  const array: number[] = [];
+  let numString = list.val.toString();
   let l = list;
-  array.push(l.val);
   while (l.next) {
     l = l.next;
-    array.push(l.val);
+    numString = numString.concat(l.val.toString());
   }
-  return array;
+  return numString;
 };
 
-const arrayToNumber = (array: number[]): number => {
-  return array.reduce((prev, curr, index) => {
-    return prev + curr * 10 ** index;
-  }, 0);
-};
-
-const numberToArray = (num: number): number[] => {
-  return [...num.toString()].toReversed().map((s) => Number.parseInt(s));
+const reverseString = (s: string): string => {
+  return s.split('').toReversed().join('');
 };
