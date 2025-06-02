@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/palindrome-number/description/
 import { expect, test } from 'vitest';
 
-test('9. Palindrome Number (with string conversion) ', () => {
+test('9. Palindrome Number (with string conversion)', () => {
   expect(isPalindrome1(121)).toBeTruthy();
   expect(isPalindrome1(-121)).toBeFalsy();
   expect(isPalindrome1(10)).toBeFalsy();
@@ -11,7 +11,7 @@ test('9. Palindrome Number (with string conversion) ', () => {
   expect(isPalindrome1(5)).toBeTruthy();
 });
 
-test('9. Palindrome Number (without string conversion) ', () => {
+test('9. Palindrome Number (without string conversion)', () => {
   expect(isPalindrome2(121)).toBeTruthy();
   expect(isPalindrome2(-121)).toBeFalsy();
   expect(isPalindrome2(10)).toBeFalsy();
