@@ -68,5 +68,5 @@ const listToNumString = (list: ListNode | null): string => {
 };
 
 const reverseString = (s: string): string => {
-  return s.split('').toReversed().join('');
+  return s.split('').reverse().join('');
 };
