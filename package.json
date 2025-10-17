@@ -2,16 +2,11 @@
   "private": true,
   "scripts": {
     "test": "vitest",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{mjs,js,ts,tsx,json,md}\""
+    "lint": "biome lint --write",
+    "format": "biome format --write"
   },
   "devDependencies": {
-    "@eslint/js": "9.37.0",
-    "@typescript-eslint/eslint-plugin": "8.46.1",
-    "@typescript-eslint/parser": "8.46.1",
-    "eslint": "9.37.0",
-    "eslint-config-prettier": "10.1.8",
-    "prettier": "3.6.2",
+    "@biomejs/biome": "2.2.6",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   }

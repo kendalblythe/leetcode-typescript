@@ -45,11 +45,11 @@ const isPalindrome2 = (n: number): boolean => {
 
 const getDigitCount = (n: number): number => {
   let count = 1;
-  while (n >= Math.pow(10, count)) count++;
+  while (n >= 10 ** count) count++;
   return count;
 };
 
 const getDigitPlaceValue = (n: number, place: number): number => {
-  const divisor = Math.pow(10, place);
+  const divisor = 10 ** place;
   return Math.floor((n / divisor) % 10);
 };

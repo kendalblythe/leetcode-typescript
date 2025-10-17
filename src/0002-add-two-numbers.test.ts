@@ -35,19 +35,19 @@ const addTwoNumbers = (l1: ListNode | null, l2: ListNode | null): ListNode | nul
   if (l1 === null || l2 === null) {
     return null;
   }
-  const n1 = parseInt(reverseString(listToNumString(l1)));
-  const n2 = parseInt(reverseString(listToNumString(l2)));
+  const n1 = Number(reverseString(listToNumString(l1)));
+  const n2 = Number(reverseString(listToNumString(l2)));
   return numStringToList(reverseString((n1 + n2).toString()));
 };
 
 const numStringToList = (numString: string): ListNode | null => {
-  if (isNaN(parseInt(numString))) {
+  if (Number.isNaN(Number(numString))) {
     return null;
   }
   let prevNode: ListNode | null = null;
   let currNode: ListNode | undefined;
   for (let i = numString.length - 1; i >= 0; i--) {
-    const n = parseInt(numString.charAt(i));
+    const n = Number(numString.charAt(i));
     currNode = new ListNode(n, prevNode);
     prevNode = currNode;
   }

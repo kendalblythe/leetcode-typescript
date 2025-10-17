@@ -11,7 +11,7 @@ TypeScript.
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
 - <a href="https://vitest.dev/">Vitest</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
-- <a href="https://eslint.org/">ESLint</a>
+- <a href="https://biomejs.dev/">Biome</a>
 - <a href="https://prettier.io/">Prettier</a>
 - <a href="https://pnpm.io/">pnpm</a>
 
