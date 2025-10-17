@@ -25,11 +25,6 @@
       "bracketSpacing": true
     }
   },
-  "html": {
-    "formatter": {
-      "selfCloseVoidElements": "always"
-    }
-  },
   "linter": {
     "rules": {
       "recommended": true
