@@ -12,15 +12,12 @@ const eslintConfig = [
       node: true,
     },
     parser: '@typescript-eslint/parser',
-    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
-    plugins: ['@typescript-eslint'],
     parserOptions: {
       sourceType: 'module',
       ecmaVersion: 'latest',
     },
-    rules: {
-      eqeqeq: 'error',
-    },
+    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+    plugins: [],
   }),
 ];
 
