@@ -1,60 +1,47 @@
-// https://leetcode.com/problems/string-to-integer-atoi/description/
+// https://leetcode.com/problems/string-to-integer-atoi/
+
 import { expect, test } from 'vitest';
+import { myAtoi as aiAtoi } from './0008-string-to-integer-atoi.ai';
+import { myAtoi } from './0008-string-to-integer-atoi.my';
 
-test('8. String to integer atoi', () => {
-  expect(stringToInteger('42')).toEqual(42);
-  expect(stringToInteger(' -042')).toEqual(-42);
-  expect(stringToInteger('1337c0d3')).toEqual(1337);
-  expect(stringToInteger('0-1')).toEqual(0);
-  expect(stringToInteger('words and 987')).toEqual(0);
-  expect(stringToInteger('+9888777666')).toEqual(MAX_VALUE);
-  expect(stringToInteger('-9888777666')).toEqual(MIN_VALUE);
+const INT_MAX = 2 ** 31 - 1;
+const INT_MIN = -(2 ** 31);
+
+test.each([
+  ['myAtoi', myAtoi],
+  ['aiAtoi', aiAtoi],
+])('String to integer atoi - %s', (_funcName, myAtoi) => {
+  // Test case 1: Basic conversion
+  expect(myAtoi('42')).toBe(42);
+
+  // Test case 2: Leading whitespace and sign
+  expect(myAtoi('   -42')).toBe(-42);
+
+  // Test case 3: Digits followed by non-digits
+  expect(myAtoi('4193 with words')).toBe(4193);
+
+  // Test case 4: Leading non-digits
+  expect(myAtoi('words and 987')).toBe(0);
+
+  // Test case 5: Only whitespace
+  expect(myAtoi('   ')).toBe(0);
+
+  // Test case 6: Only sign
+  expect(myAtoi('+')).toBe(0);
+  expect(myAtoi('-')).toBe(0);
+
+  // Test case 7: Positive overflow (2^31)
+  expect(myAtoi('2147483648')).toBe(INT_MAX);
+
+  // Test case 8: Negative overflow (-(2^31 + 1))
+  expect(myAtoi('-2147483649')).toBe(INT_MIN);
+
+  // Test case 9: Max value boundary
+  expect(myAtoi('2147483647')).toBe(INT_MAX);
+
+  // Test case 10: Min value boundary
+  expect(myAtoi('-2147483648')).toBe(INT_MIN);
+
+  // Test case 11: Leading zeros
+  expect(myAtoi('00000-42a1234')).toBe(0);
 });
-
-const MAX_VALUE = 2 ** 31 - 1;
-const MIN_VALUE = 2 ** 31 * -1;
-
-const stringToInteger = (s: string): number => {
-  let trimmedStr = trimLeadingWhitespace(s);
-  let isNegative = false;
-  if (trimmedStr.startsWith('+')) {
-    trimmedStr = trimmedStr.substring(1);
-  } else if (trimmedStr.startsWith('-')) {
-    isNegative = true;
-    trimmedStr = trimmedStr.substring(1);
-  }
-  let num = getLeadingDigits(trimmedStr);
-  num = isNegative ? -num : num;
-  return Math.max(Math.min(num, MAX_VALUE), MIN_VALUE);
-};
-
-const trimLeadingWhitespace = (s: string): string => {
-  let trimmedStr = s;
-  while (trimmedStr.match(/^\s/)) {
-    trimmedStr = trimmedStr.substring(1);
-  }
-  return trimmedStr;
-};
-
-const getLeadingDigits = (s: string): number => {
-  let digitsStr = '';
-  for (let i = 0; i < s.length; i++) {
-    const c = s.charAt(i);
-    if (c.match(/^[0-9]/)) {
-      digitsStr += c;
-    } else {
-      break;
-    }
-  }
-  return digitsStr ? parseInteger(digitsStr) : 0;
-};
-
-const parseInteger = (numStr: string): number => {
-  let n = 0;
-  for (let i = 0; i < numStr.length; i++) {
-    const digit = numStr.charCodeAt(i) - '0'.charCodeAt(0);
-    const exp = numStr.length - i - 1;
-    n += digit * 10 ** exp;
-  }
-  return n;
-};

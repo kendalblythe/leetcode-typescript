@@ -1,72 +1,68 @@
-// https://leetcode.com/problems/add-two-numbers/description/
+// https://leetcode.com/problems/add-two-numbers/
+
 import { expect, test } from 'vitest';
+import { addTwoNumbers as aiAddTwoNumbers, ListNode } from './0002-add-two-numbers.ai';
+import { addTwoNumbers as myAddTwoNumbers } from './0002-add-two-numbers.my';
 
-class ListNode {
-  val: number;
-  next: ListNode | null;
-  constructor(val?: number, next?: ListNode | null) {
-    this.val = val === undefined ? 0 : val;
-    this.next = next === undefined ? null : next;
-  }
-}
+test.each([
+  ['myAddTwoNumbers', myAddTwoNumbers],
+  ['aiAddTwoNumbers', aiAddTwoNumbers],
+])('Add Two Numbers - %s', (_funcName, addTwoNumbers) => {
+  // Test case 1: 342 + 465 = 807 (represented as [2,4,3] + [5,6,4] = [7,0,8])
+  let l1 = createList([2, 4, 3]);
+  let l2 = createList([5, 6, 4]);
+  let expected = createList([7, 0, 8]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-test('2. Add Two Numbers', () => {
-  let l1 = numStringToList('243');
-  let l2 = numStringToList('564');
-  let l3 = numStringToList('708');
-  expect(addTwoNumbers(l1, l2)).toEqual(l3);
+  // Test case 2: 0 + 0 = 0
+  l1 = createList([0]);
+  l2 = createList([0]);
+  expected = createList([0]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  l1 = numStringToList('0');
-  l2 = numStringToList('0');
-  l3 = numStringToList('0');
-  expect(addTwoNumbers(l1, l2)).toEqual(l3);
+  // Test case 3: 9999999 + 9999 = 10009998 (represented as [9,9,9,9,9,9,9] + [9,9,9,9] = [8,9,9,9,0,0,0,1])
+  l1 = createList([9, 9, 9, 9, 9, 9, 9]);
+  l2 = createList([9, 9, 9, 9]);
+  expected = createList([8, 9, 9, 9, 0, 0, 0, 1]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  l1 = numStringToList('9999999');
-  l2 = numStringToList('9999');
-  l3 = numStringToList('89990001');
-  expect(addTwoNumbers(l1, l2)).toEqual(l3);
+  // Test case 4: One list is null
+  l1 = createList([1, 2, 3]);
+  l2 = null;
+  expected = createList([1, 2, 3]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  expect(addTwoNumbers(l1, null)).toBeNull();
-  expect(addTwoNumbers(null, l2)).toBeNull();
-  expect(addTwoNumbers(null, null)).toBeNull();
+  // Test case 5: Other list is null
+  l1 = null;
+  l2 = createList([4, 5]);
+  expected = createList([4, 5]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
+
+  // Test case 6: Both lists are null
+  l1 = null;
+  l2 = null;
+  expect(addTwoNumbers(l1, l2)).toBeNull();
 });
 
-const addTwoNumbers = (l1: ListNode | null, l2: ListNode | null): ListNode | null => {
-  if (l1 === null || l2 === null) {
-    return null;
+// Helper function to create a list from an array of digits (least significant digit first)
+const createList = (digits: number[]): ListNode | null => {
+  if (digits.length === 0) return null;
+  const dummyHead = new ListNode(0);
+  let current = dummyHead;
+  for (const digit of digits) {
+    current.next = new ListNode(digit);
+    current = current.next;
   }
-  const n1 = Number(reverseString(listToNumString(l1)));
-  const n2 = Number(reverseString(listToNumString(l2)));
-  return numStringToList(reverseString((n1 + n2).toString()));
+  return dummyHead.next;
 };
 
-const numStringToList = (numString: string): ListNode | null => {
-  if (Number.isNaN(Number(numString))) {
-    return null;
+// Helper function to convert a list to an array of digits for easy comparison
+const listToArray = (list: ListNode | null): number[] => {
+  const result: number[] = [];
+  let current = list;
+  while (current) {
+    result.push(current.val);
+    current = current.next;
   }
-  let prevNode: ListNode | null = null;
-  let currNode: ListNode | undefined;
-  for (let i = numString.length - 1; i >= 0; i--) {
-    const n = Number(numString.charAt(i));
-    currNode = new ListNode(n, prevNode);
-    prevNode = currNode;
-  }
-  return currNode ?? null;
-};
-
-const listToNumString = (list: ListNode | null): string => {
-  if (list === null) {
-    return '';
-  }
-  let numString = list.val.toString();
-  let l = list;
-  while (l.next) {
-    l = l.next;
-    numString = numString.concat(l.val.toString());
-  }
-  return numString;
-};
-
-const reverseString = (s: string): string => {
-  return s.split('').reverse().join('');
+  return result;
 };

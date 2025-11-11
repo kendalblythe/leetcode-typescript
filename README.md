@@ -3,7 +3,7 @@
 ## Introduction
 
 Contains my solutions to <a href="https://leetcode.com/problemset/">LeetCode Problems</a> using
-TypeScript.
+TypeScript. Also includes AI generated solutions along with test cases.
 
 ## Technologies
 
@@ -11,8 +11,9 @@ TypeScript.
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
 - <a href="https://vitest.dev/">Vitest</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
+- <a href="https://roocode.com/">Roo Code</a>
+- <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-flash-lite">Gemini Flash-Lite</a>
 - <a href="https://biomejs.dev/">Biome</a>
-- <a href="https://prettier.io/">Prettier</a>
 - <a href="https://pnpm.io/">pnpm</a>
 
 ## Getting Started

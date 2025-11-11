@@ -1,50 +1,26 @@
-// https://leetcode.com/problems/zigzag-conversion/description/
+// https://leetcode.com/problems/zigzag-conversion/
+
 import { expect, test } from 'vitest';
+import { convert as aiConvert } from './0006-zigzag-conversion.ai';
+import { convert as myConvert } from './0006-zigzag-conversion.my';
 
-test('6. Zigzag Conversion', () => {
-  expect(zigzagConvert('PAYPALISHIRING', 3)).toEqual('PAHNAPLSIIGYIR');
-  expect(zigzagConvert('PAYPALISHIRING', 4)).toEqual('PINALSIGYAHRPI');
-  expect(zigzagConvert('A', 1)).toEqual('A');
+test.each([
+  ['myConvert', myConvert],
+  ['aiConvert', aiConvert],
+])('Zigzag Conversion - %s', (_funcName, convert) => {
+  // Test case 1: Example 1 (numRows = 3)
+  expect(convert('PAYPALISHIRING', 3)).toBe('PAHNAPLSIIGYIR');
+
+  // Test case 2: Example 2 (numRows = 4)
+  expect(convert('PAYPALISHIRING', 4)).toBe('PINALSIGYAHRPI');
+
+  // Test case 3: Single row (should return original string)
+  expect(convert('A', 1)).toBe('A');
+  expect(convert('ABCDE', 1)).toBe('ABCDE');
+
+  // Test case 4: numRows >= string length (should return original string)
+  expect(convert('ABC', 5)).toBe('ABC');
+
+  // Test case 5: numRows = 2
+  expect(convert('ABCDE', 2)).toBe('ACEBD'); // A C E / B D
 });
-
-const zigzagConvert = (s: string, numRows: number): string => {
-  // Return string if num rows = 1
-  if (numRows === 1) {
-    return s;
-  }
-
-  // Add string characters to grid (downward/right)
-  const chars = [...s];
-  const grid: Record<string, string> = {};
-  let rowIndex = 0;
-  let colIndex = 0;
-  for (let i = 0; i < chars.length; i++) {
-    const c = chars[i];
-    const colOffset = colIndex % (numRows - 1);
-    if (colOffset === 0) {
-      grid[getGridCoordinateKey(rowIndex++, colIndex)] = c;
-      if (rowIndex === numRows) {
-        rowIndex = 0;
-        colIndex++;
-      }
-    } else {
-      grid[getGridCoordinateKey(rowIndex + numRows - colOffset - 1, colIndex)] = c;
-      colIndex++;
-    }
-  }
-
-  // Build new string from grid characters (rightward/down)
-  let str = '';
-  for (let r = 0; r < numRows; r++) {
-    for (let c = 0; c <= colIndex; c++) {
-      const key = getGridCoordinateKey(r, c);
-      if (grid[key]) {
-        str += grid[key];
-      }
-    }
-  }
-  return str;
-};
-
-const getGridCoordinateKey = (rowIndex: number, colIndex: number): string =>
-  `${rowIndex},${colIndex}`;

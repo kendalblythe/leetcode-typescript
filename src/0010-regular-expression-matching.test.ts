@@ -1,73 +1,40 @@
-// https://leetcode.com/problems/regular-expression-matching/description/
-import { expect, test } from 'vitest';
+// https://leetcode.com/problems/regular-expression-matching/
 
-test('10. Regular Expression Matching', () => {
+import { expect, test } from 'vitest';
+import { isMatch as aiIsMatch } from './0010-regular-expression-matching.ai';
+import { isMatch as myIsMatch } from './0010-regular-expression-matching.my';
+
+test.each([
+  ['myIsMatch', myIsMatch],
+  ['aiIsMatch', aiIsMatch],
+])('Regular Expression Matching - %s', (_funcName, isMatch) => {
+  // Basic matches
   expect(isMatch('aa', 'aa')).toBeTruthy();
   expect(isMatch('aa', 'a')).toBeFalsy();
   expect(isMatch('a', 'aa')).toBeFalsy();
   expect(isMatch('aa', 'ab')).toBeFalsy();
 
-  expect(isMatch('a', 'a*')).toBeTruthy();
-  expect(isMatch('aa', 'a*')).toBeTruthy();
-  expect(isMatch('aaa', 'a*')).toBeTruthy();
-  expect(isMatch('aab', 'a*')).toBeFalsy();
-
-  expect(isMatch('a', 'a.')).toBeFalsy();
-  expect(isMatch('aa', 'a.')).toBeTruthy();
+  // '.' matches any single character
+  expect(isMatch('a', 'a.')).toBeFalsy(); // s='a', p='a.' -> false (s too short)
   expect(isMatch('ab', 'a.')).toBeTruthy();
   expect(isMatch('abc', 'a.')).toBeFalsy();
 
-  expect(isMatch('abcdefg', '.*')).toBeTruthy();
+  // '*' matches zero or more of the preceding element
+  expect(isMatch('a', 'a*')).toBeTruthy(); // a* matches zero 'a's
+  expect(isMatch('aa', 'a*')).toBeTruthy(); // a* matches two 'a's
+  expect(isMatch('aaa', 'a*')).toBeTruthy(); // a* matches three 'a's
+  expect(isMatch('aab', 'a*b')).toBeTruthy(); // a* matches 'aa', b matches 'b'
+  expect(isMatch('mississippi', 'mis*is*p*.')).toBeFalsy(); // Example from problem description
 
-  expect(isMatch('abc', 'abc*')).toBeTruthy();
-  expect(isMatch('abcc', 'abc*')).toBeTruthy();
-  expect(isMatch('abcd', 'abc*')).toBeFalsy();
+  // Combination of '.' and '*'
+  expect(isMatch('ab', '.*')).toBeTruthy(); // .* matches 'ab'
+  expect(isMatch('aab', 'c*a*b')).toBeTruthy(); // c* matches zero 'c's, a* matches 'aa', b matches 'b'
+  expect(isMatch('mississippi', 'mis*is*ip*.')).toBeTruthy(); // s* matches 'ss', s* matches 'ss', p* matches 'pp', . matches 'i'
 
-  expect(isMatch('abbbc', 'ab*c')).toBeTruthy();
-  expect(isMatch('abbbcd', 'ab*c')).toBeFalsy();
-  expect(isMatch('abbbc', 'ab*cd')).toBeFalsy();
-
-  expect(isMatch('abc', 'a*b*c*')).toBeTruthy();
-  expect(isMatch('aabc', 'a*b*c*')).toBeTruthy();
-  expect(isMatch('aabbc', 'a*b*c*')).toBeTruthy();
-  expect(isMatch('aabbcc', 'a*b*c*')).toBeTruthy();
-  expect(isMatch('aabbccd', 'a*b*c*')).toBeFalsy();
-  expect(isMatch('abcabc', 'a*b*c*')).toBeFalsy();
-  expect(isMatch('aacc', 'a*b*c*')).toBeFalsy();
+  // Edge cases
+  expect(isMatch('', 'a*')).toBeTruthy(); // Zero length string matches a*
+  expect(isMatch('', '.*')).toBeTruthy();
+  expect(isMatch('', 'c*a*b')).toBeFalsy();
+  expect(isMatch('a', 'ab*')).toBeTruthy(); // b* matches zero 'b's
+  expect(isMatch('bbbba', '.*a*a')).toBeTruthy();
 });
-
-const isMatch = (s: string, p: string): boolean => {
-  let stringIndex = 0;
-  let patternIndex = 0;
-  let prevStringChar = '';
-  while (stringIndex < s.length || patternIndex < p.length) {
-    const stringChar = s.charAt(stringIndex);
-    const patternChar = p.charAt(patternIndex);
-    let hasMatch = false;
-    switch (patternChar) {
-      case '.':
-        hasMatch = !!stringChar;
-        prevStringChar = patternChar;
-        stringIndex++;
-        patternIndex++;
-        break;
-      case '*':
-        hasMatch = stringChar === prevStringChar || (!!stringChar && prevStringChar === '.');
-        if (hasMatch) {
-          stringIndex++;
-        } else {
-          hasMatch = true;
-          patternIndex++;
-        }
-        break;
-      default:
-        hasMatch = stringChar === patternChar;
-        prevStringChar = stringChar;
-        stringIndex++;
-        patternIndex++;
-        break;
-    }
-    if (!hasMatch) return false;
-  }
-  return true;
-};
