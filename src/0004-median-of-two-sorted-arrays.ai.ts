@@ -9,60 +9,52 @@
  * @returns {number} The median of the two sorted arrays.
  */
 export function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
-  // Ensure nums1 is the smaller array to guarantee O(log(min(m, n))) complexity for binary search.
+  // Ensure nums1 is the smaller array for optimization
   if (nums1.length > nums2.length) {
-    [nums1, nums2] = [nums2, nums1];
+    return findMedianSortedArrays(nums2, nums1);
   }
 
-  const m = nums1.length;
-  const n = nums2.length;
-  const totalLength = m + n;
-  // halfLen is the size of the left partition (or left + middle element for odd total length).
-  const halfLen = Math.floor((totalLength + 1) / 2);
-
+  // Initialize binary search bounds on the smaller array
   let low = 0;
-  let high = m; // Binary search space is on the smaller array (nums1) length.
+  let high = nums1.length;
 
+  // Binary search to find the correct partition
   while (low <= high) {
-    // partitionX is the number of elements taken from nums1 for the left partition.
-    const partitionX = Math.floor((low + high) / 2);
-    // partitionY is determined by partitionX to ensure the left partition size is halfLen.
-    const partitionY = halfLen - partitionX;
+    // Partition point in nums1 (how many elements from nums1 go to the left side)
+    const partition1 = Math.floor((low + high) / 2);
 
-    // Determine boundary elements for partitionX in nums1
-    // maxX: largest element in the left part of nums1. Use -Infinity if partitionX is 0.
-    const maxX = partitionX === 0 ? -Infinity : nums1[partitionX - 1];
-    // minX: smallest element in the right part of nums1. Use Infinity if partitionX is m.
-    const minX = partitionX === m ? Infinity : nums1[partitionX];
+    // Calculate partition point in nums2 such that left side has equal elements as right side
+    // Total elements on left = partition1 + partition2
+    // We want: partition1 + partition2 = (nums1.length + nums2.length + 1) / 2
+    const partition2 = Math.floor((nums1.length + nums2.length + 1) / 2) - partition1;
 
-    // Determine boundary elements for partitionY in nums2
-    // maxY: largest element in the left part of nums2. Use -Infinity if partitionY is 0.
-    const maxY = partitionY === 0 ? -Infinity : nums2[partitionY - 1];
-    // minY: smallest element in the right part of nums2. Use Infinity if partitionY is n.
-    const minY = partitionY === n ? Infinity : nums2[partitionY];
+    // Handle edge cases when partition is at boundaries
+    // Use -Infinity when partition is 0 (no elements from that array on left side)
+    // Use +Infinity when partition equals array length (all elements on left side)
+    const left1 = partition1 === 0 ? -Infinity : nums1[partition1 - 1];
+    const right1 = partition1 === nums1.length ? Infinity : nums1[partition1];
 
-    // Check if the partition is correct: max of left side <= min of right side.
-    if (maxX <= minY && maxY <= minX) {
-      // Correct partition found. Calculate median.
-      if (totalLength % 2 === 0) {
-        // Even total length: median is average of max(left_part) and min(right_part)
-        const leftMax = Math.max(maxX, maxY);
-        const rightMin = Math.min(minX, minY);
-        return (leftMax + rightMin) / 2;
-      } else {
-        // Odd total length: median is the largest element in the left partition.
-        return Math.max(maxX, maxY);
-      }
-    } else if (maxX > minY) {
-      // maxX is too large, meaning partitionX is too far right. Move left in nums1.
-      high = partitionX - 1;
+    const left2 = partition2 === 0 ? -Infinity : nums2[partition2 - 1];
+    const right2 = partition2 === nums2.length ? Infinity : nums2[partition2];
+
+    // Check if partition is valid (all elements on left <= all elements on right)
+    if (left1 <= right2 && left2 <= right1) {
+      // Valid partition found
+      // If total length is even, median is average of max(left) and min(right)
+      // If total length is odd, median is max(left)
+      const totalLength = nums1.length + nums2.length;
+      return totalLength % 2 === 0
+        ? (Math.max(left1, left2) + Math.min(right1, right2)) / 2
+        : Math.max(left1, left2);
+    } else if (left1 > right2) {
+      // partition1 is too large, move it left
+      high = partition1 - 1;
     } else {
-      // maxY > minX
-      // maxY is too large (or minX is too small), meaning partitionX is too far left. Move right in nums1.
-      low = partitionX + 1;
+      // partition1 is too small, move it right
+      low = partition1 + 1;
     }
   }
 
-  // Should only be reached if input constraints (sorted arrays) are violated.
-  throw new Error('Input arrays are not sorted or logic error.');
+  // Should never reach here with valid input
+  return -1;
 }

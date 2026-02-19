@@ -8,25 +8,24 @@
  * @returns {number[]} An array containing the indices of the two numbers.
  */
 export function twoSum(nums: number[], target: number): number[] {
-  // Use a Map to store numbers encountered so far and their indices for O(1) lookups.
-  // Key: number, Value: index
-  const numMap = new Map<number, number>();
+  // Map to store each number and its index as we iterate through the array
+  const map = new Map<number, number>();
 
   for (let i = 0; i < nums.length; i++) {
-    // Calculate the required complement to reach the target.
+    // Calculate the complement: the number we need to find to reach the target
     const complement = target - nums[i];
 
-    // Check if the complement exists in the map. If it does, we found the pair.
-    if (numMap.has(complement)) {
-      // Return the index of the complement (stored in the map) and the current index i.
-      // biome-ignore lint/style/noNonNullAssertion: if statement above checks for existence
-      return [numMap.get(complement)!, i];
+    // Check if the complement already exists in the map
+    const index = map.get(complement);
+    if (index !== undefined) {
+      // Found the pair! Return the index of the complement and current index
+      return [index, i];
     }
 
-    // If the complement is not found, store the current number and its index for future checks.
-    numMap.set(nums[i], i);
+    // Store the current number and its index for future lookups
+    map.set(nums[i], i);
   }
 
-  // As per problem constraints, exactly one solution exists, so this line should not be reached.
+  // No valid pair found
   return [];
 }

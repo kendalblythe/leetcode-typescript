@@ -8,25 +8,35 @@
  * @returns {number} The maximum area of water that can be contained.
  */
 export const maxArea = (height: number[]): number => {
-  let maxArea = 0;
+  // Handle edge case: if array has fewer than 2 elements, no container can be formed
+  if (height.length < 2) {
+    return 0;
+  }
+
+  // Initialize pointers at the start and end of the array
   let left = 0;
   let right = height.length - 1;
 
-  // Use two pointers starting from the ends, moving inwards.
+  // Track the maximum area found so far
+  let maxAreaFound = 0;
+
+  // Use two-pointer approach: start from both ends and move inward
   while (left < right) {
-    // The height of the container is limited by the shorter line.
-    const h = Math.min(height[left], height[right]);
-    // The width is the distance between the pointers.
-    const w = right - left;
-    const currentArea = h * w;
+    // Calculate the width (distance between the two pointers)
+    const width = right - left;
 
-    // Update the maximum area found so far.
-    maxArea = Math.max(maxArea, currentArea);
+    // Calculate the height of the container (limited by the shorter line)
+    const currentHeight = Math.min(height[left], height[right]);
 
-    // Optimization: To potentially find a larger area, we must move the pointer
-    // corresponding to the shorter line inward. Moving the taller line guarantees
-    // a smaller or equal height (limited by the shorter line) and a smaller width,
-    // thus guaranteeing a smaller area.
+    // Calculate the area of the current container
+    const currentArea = width * currentHeight;
+
+    // Update maxAreaFound if the current area is greater
+    maxAreaFound = Math.max(maxAreaFound, currentArea);
+
+    // Move the pointer pointing to the shorter line inward
+    // This is the key insight: moving the taller line can only decrease or keep the area same,
+    // but moving the shorter line might find a taller line that increases the area
     if (height[left] < height[right]) {
       left++;
     } else {
@@ -34,5 +44,5 @@ export const maxArea = (height: number[]): number => {
     }
   }
 
-  return maxArea;
+  return maxAreaFound;
 };

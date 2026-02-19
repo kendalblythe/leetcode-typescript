@@ -25,34 +25,43 @@ export class ListNode {
  * @returns {ListNode | null} The head of the resulting linked list sum.
  */
 export function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
-  // Dummy head to simplify list construction. The result starts at dummyHead.next.
+  // Handle edge cases where one or both lists are null
+  if (l1 === null) return l2;
+  if (l2 === null) return l1;
+
+  // Create a dummy node to simplify the logic of creating the result list
   const dummyHead = new ListNode(0);
   let current = dummyHead;
+
+  // Initialize carry to 0 at the start
   let carry = 0;
 
-  // Iterate as long as there are digits in either list or a carry remains.
-  while (l1 !== null || l2 !== null || carry !== 0) {
-    // Get the value from the current node, or 0 if the list is exhausted.
-    const val1 = l1 ? l1.val : 0;
-    const val2 = l2 ? l2.val : 0;
+  // Traverse both lists simultaneously until both are exhausted
+  while (l1 !== null || l2 !== null || carry > 0) {
+    // Get the value from l1, or 0 if l1 is exhausted
+    const val1 = l1 !== null ? l1.val : 0;
+    // Get the value from l2, or 0 if l2 is exhausted
+    const val2 = l2 !== null ? l2.val : 0;
 
-    // Calculate the sum of digits plus any carry from the previous step.
+    // Calculate the sum of the two digits plus any carry from the previous iteration
     const sum = val1 + val2 + carry;
 
-    // Determine the new carry (the tens digit of the sum).
-    carry = Math.floor(sum / 10);
-    // Determine the digit for the new node (the ones digit of the sum).
+    // The digit to store is the remainder when divided by 10
     const digit = sum % 10;
 
-    // Create a new node with the calculated digit and append it to the result list.
+    // Update carry: if sum >= 10, carry will be 1, otherwise 0
+    carry = Math.floor(sum / 10);
+
+    // Create a new node with the calculated digit and append it to the result
     current.next = new ListNode(digit);
     current = current.next;
 
-    // Move pointers forward in the input lists if they are not null.
-    if (l1) l1 = l1.next;
-    if (l2) l2 = l2.next;
+    // Move to the next node in l1 if it exists
+    l1 = l1 !== null ? l1.next : null;
+    // Move to the next node in l2 if it exists
+    l2 = l2 !== null ? l2.next : null;
   }
 
-  // Return the head of the actual resulting list (skipping the dummy head).
+  // Return the result list (skip the dummy node with value 0)
   return dummyHead.next;
 }

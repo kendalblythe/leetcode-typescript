@@ -11,8 +11,8 @@ TypeScript. Also includes AI generated solutions along with test cases.
 - <a href="https://www.typescriptlang.org/">TypeScript</a>
 - <a href="https://vitest.dev/">Vitest</a>
 - <a href="https://code.visualstudio.com/">Visual Studio Code</a>
-- <a href="https://roocode.com/">Roo Code</a>
-- <a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/2-5-flash-lite">Gemini Flash-Lite</a>
+- <a href="https://github.com/features/copilot">GitHub Copilot</a>
+- <a href="https://www.anthropic.com/claude/haiku">Claude Haiku</a>
 - <a href="https://biomejs.dev/">Biome</a>
 - <a href="https://pnpm.io/">pnpm</a>
 
@@ -22,7 +22,8 @@ After you clone the Git repository, you can run the following <a href="https://p
 commands.
 
 - `pnpm install` - install packages
-- `pnpm test` - run tests
+- `pnpm test` - run tests interactively
+- `pnpm test:all` - run all tests
 - `pnpm lint` - lint check
 - `pnpm format` - format code
 

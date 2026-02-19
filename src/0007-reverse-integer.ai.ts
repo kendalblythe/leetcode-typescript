@@ -8,42 +8,39 @@
  * @returns {number} The reversed integer, or 0 if overflow occurs.
  */
 export function reverse(x: number): number {
-  const INT_MAX = 2 ** 31 - 1; // 2147483647
-  const INT_MIN = -(2 ** 31); // -2147483648
+  // Define the 32-bit signed integer boundaries
+  const MAX_INT32 = 2147483647; // 2^31 - 1
 
-  let reversed = 0;
-  // Work with the absolute value of x
-  let input = Math.abs(x);
-  // Store the original sign
+  // Extract the sign and work with the absolute value
   const sign = x < 0 ? -1 : 1;
+  let num = Math.abs(x);
 
-  while (input > 0) {
-    const digit = input % 10;
+  // Reverse the digits by repeatedly extracting and building the reversed number
+  let reversed = 0;
 
-    // Overflow check for positive result (before multiplying reversed by 10)
-    // If reversed > INT_MAX / 10, overflow is guaranteed on multiplication.
-    // If reversed == INT_MAX / 10, overflow occurs if the next digit is > 7 (since INT_MAX ends in 7).
-    if (
-      reversed > Math.floor(INT_MAX / 10) ||
-      (reversed === Math.floor(INT_MAX / 10) && digit > 7)
-    ) {
+  while (num > 0) {
+    // Extract the last digit from the original number using modulo
+    const digit = num % 10;
+
+    // Check for overflow before shifting left and adding the new digit
+    // If reversed > 214748364 (floor(MAX_INT32 / 10)), the next operation will overflow
+    if (reversed > Math.floor(MAX_INT32 / 10)) {
       return 0;
     }
 
-    // Build the reversed number
+    // Additional overflow check: if reversed equals the floor division
+    // and the digit is > 7, the result (214748364 * 10 + digit) exceeds MAX_INT32
+    if (reversed === Math.floor(MAX_INT32 / 10) && digit > 7) {
+      return 0;
+    }
+
+    // Build the reversed number by shifting left one decimal place and adding the digit
     reversed = reversed * 10 + digit;
-    // Move to the next digit
-    input = Math.floor(input / 10);
+
+    // Remove the last digit from the original number for next iteration
+    num = Math.floor(num / 10);
   }
 
-  const result = reversed * sign;
-
-  // Final check for negative overflow (INT_MIN is -2147483648, which ends in 8)
-  // Note: The positive overflow check already handles the magnitude up to 2147483647.
-  // If x was negative and reversed magnitude is 2147483648, it will be caught here.
-  if (result < INT_MIN || result > INT_MAX) {
-    return 0;
-  }
-
-  return result;
+  // Apply the original sign to the reversed number and return
+  return sign * reversed;
 }

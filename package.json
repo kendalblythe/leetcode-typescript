@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "test": "vitest",
+    "test:all": "vitest --run",
     "lint": "biome lint --write",
     "format": "biome format --write"
   },

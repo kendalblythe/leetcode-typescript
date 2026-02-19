@@ -7,31 +7,30 @@
  * @returns {number} The length of the longest substring without repeating characters.
  */
 export function lengthOfLongestSubstring(s: string): number {
-  // Tracks the maximum length found so far.
-  let maxLength = 0;
-  // 'start' is the left boundary of the current sliding window.
-  let start = 0;
-  // Map to store the last seen index of each character.
-  const charIndexMap = new Map<string, number>();
+  // Use a sliding window approach with a Map to track character indices
+  // This allows us to quickly find where the last occurrence of a repeated character was
+  const charIndex = new Map<string, number>();
 
-  // 'end' is the right boundary of the sliding window, expanding one character at a time.
-  for (let end = 0; end < s.length; end++) {
-    const char = s[end];
+  let maxLength = 0; // Track the longest substring found
+  let left = 0; // Left pointer of the sliding window
 
-    if (charIndexMap.has(char)) {
-      // If the character is a repeat, we must shrink the window from the left ('start').
-      // We move 'start' to be one position after the last occurrence of this character,
-      // but only if that last occurrence is within or at the current 'start' boundary.
-      // Math.max ensures 'start' only moves forward, never backward.
-      // biome-ignore lint/style/noNonNullAssertion: if statement above checks for existence
-      start = Math.max(start, charIndexMap.get(char)! + 1);
+  // Iterate through the string with the right pointer
+  for (let right = 0; right < s.length; right++) {
+    const char = s[right];
+
+    // If the character is already in our window, move the left pointer
+    // to the right of the previous occurrence of this character
+    if (charIndex.has(char)) {
+      // Only move left pointer forward if the previous occurrence is within current window
+      left = Math.max(left, (charIndex.get(char) ?? 0) + 1);
     }
 
-    // Update the character's index to its current position (the right boundary).
-    charIndexMap.set(char, end);
+    // Update the current character's most recent index
+    charIndex.set(char, right);
 
-    // Calculate the current window size (end - start + 1) and update maxLength if larger.
-    maxLength = Math.max(maxLength, end - start + 1);
+    // Update the maximum length found so far
+    // Current window size is from left to right (inclusive)
+    maxLength = Math.max(maxLength, right - left + 1);
   }
 
   return maxLength;

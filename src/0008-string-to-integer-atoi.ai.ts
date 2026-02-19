@@ -15,60 +15,42 @@
  * @returns {number} The converted integer.
  */
 export function myAtoi(s: string): number {
-  const INT_MAX = 2 ** 31 - 1; // 2147483647
-  const INT_MIN = -(2 ** 31); // -2147483648
+  // Define 32-bit signed integer boundaries
+  const INT_MAX = 2 ** 31 - 1;
+  const INT_MIN = -(2 ** 31);
 
+  // Step 1: Skip leading whitespace
   let i = 0;
-  let sign = 1;
-  let result = 0;
-
-  // 1. Read in and ignore any leading whitespace.
   while (i < s.length && s[i] === ' ') {
     i++;
   }
 
-  // 2. Check if the next character is '-' or '+'. Determine the sign.
-  if (i < s.length && (s[i] === '+' || s[i] === '-')) {
-    sign = s[i] === '-' ? -1 : 1;
+  // Step 2: Check for sign (+ or -), default to positive
+  let isNegative = false;
+  if (i < s.length && (s[i] === '-' || s[i] === '+')) {
+    isNegative = s[i] === '-';
     i++;
   }
 
-  // 3. Read in next the characters until the next non-digit character or the end of the input is reached.
-  while (i < s.length) {
-    const char = s[i];
-    // Convert character to digit (e.g., '5' -> 5)
-    const digit = char.charCodeAt(0) - '0'.charCodeAt(0);
+  // Step 3: Read digits until non-digit or end of string
+  let result = 0;
+  while (i < s.length && s[i] >= '0' && s[i] <= '9') {
+    // Get the digit value (0-9)
+    const digit = s.charCodeAt(i) - '0'.charCodeAt(0);
 
-    if (digit < 0 || digit > 9) {
-      break; // Stop if the character is not a digit
+    // Check and prevent overflow before updating result
+    // If result > INT_MAX / 10, or result == INT_MAX / 10 but digit will overflow
+    if (result > INT_MAX / 10 || (result === Math.floor(INT_MAX / 10) && digit > 7)) {
+      // Return clamped value based on sign
+      return isNegative ? INT_MIN : INT_MAX;
     }
 
-    // 4. Convert these digits into an integer and check for overflow before updating result.
-    // Determine the clamping limit based on the sign.
-    const limit = sign === 1 ? INT_MAX : Math.abs(INT_MIN);
-    const limitDiv10 = Math.floor(limit / 10);
-
-    // Check if multiplying 'result' by 10 and adding 'digit' will exceed the limit.
-    if (result > limitDiv10 || (result === limitDiv10 && digit > limit % 10)) {
-      // If overflow detected, return the appropriate clamped value immediately.
-      return sign === 1 ? INT_MAX : INT_MIN;
-    }
-
+    // Add the digit to result
     result = result * 10 + digit;
     i++;
   }
 
-  // 5. Apply the sign.
-  if (result === 0) {
-    return 0;
-  }
-  result *= sign;
-
-  // 6. Clamp the result to the 32-bit signed integer range.
-  // This final check is technically redundant if the in-loop check is perfect for both signs,
-  // but serves as a final safeguard, especially for the negative boundary (-2^31).
-  if (result > INT_MAX) return INT_MAX;
-  if (result < INT_MIN) return INT_MIN;
-
-  return result;
+  // Step 4 & 5: Apply sign and return result
+  // Avoid returning -0 by returning 0 when result is 0
+  return result === 0 ? 0 : isNegative ? -result : result;
 }

@@ -11,53 +11,51 @@
  * @returns {boolean} True if the string matches the pattern, false otherwise.
  */
 export function isMatch(s: string, p: string): boolean {
-  const m = s.length;
-  const n = p.length;
-
-  // dp[i][j] is true if the first i characters of s match the first j characters of p
-  // Size (m+1) x (n+1) for easier indexing corresponding to string lengths.
-  const dp: boolean[][] = Array(m + 1)
-    .fill(0)
-    .map(() => Array(n + 1).fill(false));
+  // Create a 2D DP table where dp[i][j] represents whether s[0...i-1] matches p[0...j-1]
+  const dp: boolean[][] = Array.from({ length: s.length + 1 }, () =>
+    Array(p.length + 1).fill(false)
+  );
 
   // Base case: empty string matches empty pattern
   dp[0][0] = true;
 
-  // Initialize first row: Handle patterns like a*, a*b*, a*b*c* matching an empty string s
-  for (let j = 1; j <= n; j++) {
-    // If pattern char is '*', it can match zero of the preceding element (p[j-2])
+  // Handle patterns like a*, a*b*, etc. that can match empty strings
+  // If pattern has '*', it can match zero occurrences of the preceding character
+  for (let j = 2; j <= p.length; j++) {
+    // If current pattern character is '*', we can skip both the character and the '*'
     if (p[j - 1] === '*') {
       dp[0][j] = dp[0][j - 2];
     }
   }
 
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      const sChar = s[i - 1];
-      const pChar = p[j - 1];
-
-      if (pChar === '.' || pChar === sChar) {
-        // Case 1: Current characters match or pattern has '.' (matches any single character)
-        dp[i][j] = dp[i - 1][j - 1];
-      } else if (pChar === '*') {
-        // Case 2: Pattern character is '*'
-        const prevPChar = p[j - 2]; // The character '*' applies to
-
-        // Subcase 2a: '*' matches zero occurrences of the preceding element (p[j-2]).
-        // We check if s[0...i-1] matches p[0...j-3] (effectively skipping 'x*').
+  // Fill the DP table bottom-up
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 1; j <= p.length; j++) {
+      // If the current pattern character is '*'
+      if (p[j - 1] === '*') {
+        // Case 1: '*' matches zero occurrences of the preceding character
+        // We skip both the preceding character and the '*' in the pattern
         dp[i][j] = dp[i][j - 2];
 
-        // Subcase 2b: '*' matches one or more occurrences of the preceding element.
-        // This is possible only if s[i-1] matches p[j-2] (or p[j-2] is '.').
-        if (prevPChar === '.' || prevPChar === sChar) {
-          // If it matches, we check if s[0...i-2] matches p[0...j-1] (i.e., '*' consumes one more character from s).
+        // Case 2: '*' matches one or more occurrences
+        // This is possible if the preceding character matches the current string character
+        // (or the preceding character is '.' which matches any character)
+        if (p[j - 2] === '.' || p[j - 2] === s[i - 1]) {
+          // If we can match, use the previous row result (consume one more char from string)
           dp[i][j] = dp[i][j] || dp[i - 1][j];
         }
+      } else {
+        // If current pattern character is not '*'
+        // Check if it matches the current string character
+        if (p[j - 1] === '.' || p[j - 1] === s[i - 1]) {
+          // If it matches, the result depends on whether previous parts match
+          dp[i][j] = dp[i - 1][j - 1];
+        }
+        // If it doesn't match, dp[i][j] remains false (default value)
       }
-      // If none of the above, dp[i][j] remains false (default initialization).
     }
   }
 
-  // The result is whether the entire string s matches the entire pattern p.
-  return dp[m][n];
+  // Return whether the entire string matches the entire pattern
+  return dp[s.length][p.length];
 }
