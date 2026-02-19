@@ -28,4 +28,15 @@ test.each([
 
   // Test case 7: Arrays with negative numbers
   expect(findMedianSortedArrays([-5, 3, 6, 12, 15], [-12, -10, -6, -3, 4, 10])).toBe(3.0); // Merged: [-12, -10, -6, -5, -3, 3, 4, 6, 10, 12, 15]. Length 11. Median is 6th element (index 5), which is 3.
+
+  // Test case 8: Single element in each array
+  expect(findMedianSortedArrays([1], [2])).toBe(1.5);
+
+  // Test case 9: All elements in first array smaller than second
+  expect(findMedianSortedArrays([1, 2], [3, 4, 5, 6])).toBe(3.5);
+
+  // Test case 10: Very large arrays
+  const largeArr1 = Array.from({ length: 100 }, (_, i) => i);
+  const largeArr2 = Array.from({ length: 100 }, (_, i) => i + 100);
+  expect(findMedianSortedArrays(largeArr1, largeArr2)).toBe(99.5);
 });

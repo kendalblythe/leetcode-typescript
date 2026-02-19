@@ -33,4 +33,19 @@ test.each([
 
   // Test case 8: Single digit
   expect(reverse(5)).toBe(5);
+
+  // Test case 9: Multiple trailing zeros
+  expect(reverse(1000)).toBe(1);
+  expect(reverse(1200)).toBe(21);
+
+  // Test case 10: Negative with trailing zeros
+  expect(reverse(-100)).toBe(-1);
+  expect(reverse(-1230)).toBe(-321);
+
+  // Test case 11: Very small valid reverse
+  expect(reverse(101)).toBe(101); // Palindromic
+  expect(reverse(102)).toBe(201);
+
+  // Test case 12: All zeros except leading digit
+  expect(reverse(1000000000)).toBe(1);
 });

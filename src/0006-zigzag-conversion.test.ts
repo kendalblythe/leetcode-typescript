@@ -23,4 +23,18 @@ test.each([
 
   // Test case 5: numRows = 2
   expect(convert('ABCDE', 2)).toBe('ACEBD'); // A C E / B D
+
+  // Test case 6: Larger example with numRows = 5 (verify pattern conservation)
+  const result6 = convert('ABCDEFGHIJKLMNOP', 5);
+  expect(result6.length).toBe(16); // No characters lost
+  expect([...result6].sort().join('')).toBe('ABCDEFGHIJKLMNOP'); // All characters present
+
+  // Test case 7: Two character string with numRows = 2
+  expect(convert('AB', 2)).toBe('AB');
+
+  // Test case 8: Single character
+  expect(convert('A', 2)).toBe('A');
+
+  // Test case 9: Three character string with numRows = 3 (forms a pattern)
+  expect(convert('ABC', 3)).toBe('ABC');
 });

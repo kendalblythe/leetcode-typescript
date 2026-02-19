@@ -29,4 +29,16 @@ test.each([
   // Test case 7: String with leading/trailing repeats
   expect(lengthOfLongestSubstring('aab')).toBe(2); // "ab"
   expect(lengthOfLongestSubstring('dvdf')).toBe(3); // "vdf"
+
+  // Test case 8: Character repeats at different distances
+  expect(lengthOfLongestSubstring('abcabcbb')).toBe(3); // "abc"
+  expect(lengthOfLongestSubstring('au')).toBe(2);
+  expect(lengthOfLongestSubstring('1234567890abcdefghijklmnopqrstuvwxyz')).toBe(36);
+
+  // Test case 9: Repeated characters with unique patterns
+  expect(lengthOfLongestSubstring('abcdacbb')).toBe(4); // "abcd"
+  expect(lengthOfLongestSubstring('tmmzuxt')).toBe(5); // "mzuxt"
+
+  // Test case 10: Single character repeated throughout
+  expect(lengthOfLongestSubstring('aaaaaab')).toBe(2); // "ab"
 });

@@ -26,19 +26,37 @@ test.each([
   expected = createList([8, 9, 9, 9, 0, 0, 0, 1]);
   expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  // Test case 4: One list is null
+  // Test case 4: Single digit addition with carry
+  l1 = createList([9, 9]);
+  l2 = createList([1]);
+  expected = createList([0, 0, 1]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
+
+  // Test case 5: Different lengths, no carry
+  l1 = createList([1, 2, 3]);
+  l2 = createList([4, 5]);
+  expected = createList([5, 7, 3]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
+
+  // Test case 6: Longer list, with carries
+  l1 = createList([2, 4, 3, 2, 4, 3]);
+  l2 = createList([5, 6, 4]);
+  expected = createList([7, 0, 8, 2, 4, 3]);
+  expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
+
+  // Test case 7: One list is null
   l1 = createList([1, 2, 3]);
   l2 = null;
   expected = createList([1, 2, 3]);
   expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  // Test case 5: Other list is null
+  // Test case 8: Other list is null
   l1 = null;
   l2 = createList([4, 5]);
   expected = createList([4, 5]);
   expect(listToArray(addTwoNumbers(l1, l2))).toEqual(listToArray(expected));
 
-  // Test case 6: Both lists are null
+  // Test case 9: Both lists are null
   l1 = null;
   l2 = null;
   expect(addTwoNumbers(l1, l2)).toBeNull();

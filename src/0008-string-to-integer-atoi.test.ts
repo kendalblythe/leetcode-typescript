@@ -44,4 +44,23 @@ test.each([
 
   // Test case 11: Leading zeros
   expect(myAtoi('00000-42a1234')).toBe(0);
+
+  // Test case 12: Multiple spaces before number
+  expect(myAtoi('     123')).toBe(123);
+
+  // Test case 13: Zero with leading whitespace
+  expect(myAtoi('  0')).toBe(0);
+
+  // Test case 14: Leading zeros with number
+  expect(myAtoi('  00000123')).toBe(123);
+
+  // Test case 15: Plus sign with number
+  expect(myAtoi('+123')).toBe(123);
+
+  // Test case 16: Multiple signs (invalid)
+  expect(myAtoi('+-123')).toBe(0);
+  expect(myAtoi('-+123')).toBe(0);
+
+  // Test case 17: Very large number with leading zeros
+  expect(myAtoi('00000000002147483647')).toBe(INT_MAX);
 });

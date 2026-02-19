@@ -8,9 +8,11 @@ test.each([
   ['myLongestPalindrome', myLongestPalindrome],
   ['aiLongestPalindrome', aiLongestPalindrome],
 ])('Longest Palindromic Substring - %s', (_funcName, longestPalindrome) => {
-  // Test case 1: Odd length palindrome in the middle
-  // 'bab' or 'aba'. The implementation should return 'bab' because it checks center i=1 first (odd) -> 'bab', then i=2 (odd) -> 'a', i=2 (even) -> 'ad' fails.
-  expect(longestPalindrome('babad')).toMatch(/bab|aba/);
+  // Test case 1: Odd length palindrome in the middle (unambiguous)
+  // Note: Multiple longest palindromes may exist; implementations may return any of them
+  const result1 = longestPalindrome('babad');
+  expect(['bab', 'aba']).toContain(result1);
+  expect(result1.length).toBe(3);
 
   // Test case 2: Even length palindrome
   expect(longestPalindrome('cbbd')).toBe('bb');
